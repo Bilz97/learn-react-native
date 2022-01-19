@@ -8,6 +8,9 @@
  * @format
  */
 
+// API: 
+// https://developer.nrel.gov/docs/transportation/alt-fuel-stations-v1/
+
 import React from 'react';
 import {
   SafeAreaView,
@@ -17,15 +20,14 @@ import {
   Text,
   useColorScheme,
   View,
+  SectionList
 } from 'react-native';
 
 import {
   Colors,
-  DebugInstructions,
   Header,
-  LearnMoreLinks,
-  ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
 
 const Section: React.FC<{
   title: string;
@@ -62,32 +64,28 @@ const App = () => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const DATA = [
+    {
+      title: "charger 1",
+      data: ["address 1", "address 2", "address 3"]
+    },
+    {
+      title: "Charger 2",
+      data: ["address 1", "address 2", "address 3"]
+    },
+    {
+      title: "Charger 3",
+      data: ["address 1", "address 2", "address 3"]
+    },
+  ];
+
   return (
     <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
         <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
+        
       </ScrollView>
     </SafeAreaView>
   );
