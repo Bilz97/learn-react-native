@@ -12,10 +12,9 @@ export function DrivesScreen() {
     <View style={styles.baseView}>
       <QuickTestLabel title={'My Car'} />
       <QuickTestButton
-        title={'Show Stack Modal'}
+        title={'Show Trip Details'}
         bordered
         onPress={() => {
-          console.log('*** "Show Stack Modal" being pressed');
           rootStackNavigation.navigate('TripDetails', {
             data: '<Trips Details Data>',
           });

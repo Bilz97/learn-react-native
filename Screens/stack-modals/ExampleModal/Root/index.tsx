@@ -19,6 +19,12 @@ export function ExampleModalRootScreen({
 }: ExampleModalRootSreenProps) {
   const rootStackNavigation = useNavigation<RootStackNavigationProp>();
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: 'Example Modal',
+    });
+  }, [navigation]);
+
   return (
     <View style={styles.baseView}>
       <QuickTestButton
