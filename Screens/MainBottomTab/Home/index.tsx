@@ -1,58 +1,51 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
-// API:
-// https://developer.nrel.gov/docs/transportation/alt-fuel-stations-v1/
-
 import React from 'react';
-import {ScrollView} from 'react-native';
+import {Text, View} from 'react-native';
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
+import {DrawerActions, useNavigation} from '@react-navigation/native';
+import {styles} from './style';
+import {QuickTestButton} from '../../../Components/widgets';
 
-import {Header} from 'react-native/Libraries/NewAppScreen';
-
-export function HomeScreen() {
-  // const DATA = [
-  //   {
-  //     title: "charger 1",
-  //     data: ["address 1", "address 2", "address 3"]
-  //   },
-  //   {
-  //     title: "Charger 2",
-  //     data: ["address 1", "address 2", "address 3"]
-  //   },
-  //   {
-  //     title: "Charger 3",
-  //     data: ["address 1", "address 2", "address 3"]
-  //   },
-  // ];
+export type HomeScreenStackNavigatorParamList = {
+  Root: {};
+};
+export type HomeScreenStackNavigationProp =
+  NativeStackNavigationProp<HomeScreenStackNavigatorParamList>;
+const Stack = createNativeStackNavigator<HomeScreenStackNavigatorParamList>();
+export function HomeStackNavigator() {
   return (
-    <ScrollView contentInsetAdjustmentBehavior="automatic">
-      <Header />
-    </ScrollView>
+    <Stack.Navigator
+      screenOptions={() => ({
+        headerTitle: 'Home',
+      })}>
+      <Stack.Screen name="Root" component={HomeScreen} />
+    </Stack.Navigator>
   );
 }
 
-// const styles = StyleSheet.create({
-//   sectionContainer: {
-//     marginTop: 32,
-//     paddingHorizontal: 24,
-//   },
-//   sectionTitle: {
-//     fontSize: 24,
-//     fontWeight: '600',
-//   },
-//   sectionDescription: {
-//     marginTop: 8,
-//     fontSize: 18,
-//     fontWeight: '400',
-//   },
-//   highlight: {
-//     fontWeight: '700',
-//   },
-// });
+function HomeScreen() {
+  const homeStackNavigation = useNavigation<HomeScreenStackNavigationProp>();
+
+  React.useLayoutEffect(() => {
+    homeStackNavigation.setOptions({
+      headerTitle: '',
+      headerLeft: () => (
+        <QuickTestButton
+          title={'Drawer'}
+          bordered
+          onPress={() => {
+            homeStackNavigation.dispatch(DrawerActions.openDrawer);
+          }}
+        />
+      ),
+    });
+  }, [homeStackNavigation]);
+
+  return (
+    <View style={styles.baseView}>
+      <Text>Home</Text>
+    </View>
+  );
+}

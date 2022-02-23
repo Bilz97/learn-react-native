@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {LogBox} from 'react-native';
 import {
   SafeAreaProvider,
   SafeAreaView,
@@ -11,6 +12,8 @@ import {styles} from './style';
 // App - AppRoot - RootStackNavigator
 
 export function RootComponent() {
+  LogBox.ignoreAllLogs();
+
   return (
     <NavigationContainer>
       <SafeAreaProvider initialMetrics={initialWindowMetrics}>

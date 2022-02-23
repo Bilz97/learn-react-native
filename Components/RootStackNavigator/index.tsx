@@ -4,7 +4,7 @@ import {
   NativeStackNavigationProp,
 } from '@react-navigation/native-stack';
 import {TransitionPresets} from '@react-navigation/stack';
-import {MainBottomTabNavigator} from '../../Screens/MainBottomTab';
+import {MainDrawerNavigator} from '../../Screens/MainDrawer';
 import {ExampleModalStackNavigator} from '../../Screens/stack-modals/ExampleModal';
 import {
   TripDetailsParamList,
@@ -12,7 +12,8 @@ import {
 } from '../../Screens/MainBottomTab/MyCar/Drives/TripDetails';
 
 export type RootStackNavigatorParamList = {
-  MainBottomTab: {};
+  MainDrawer: {};
+  // MainBottomTab: {};
   ExampleModal: {};
   TripDetails: TripDetailsParamList;
 };
@@ -28,7 +29,7 @@ export function RootStackNavigator() {
         presentation: 'modal',
         ...TransitionPresets.ModalPresentationIOS,
       })}>
-      <Stack.Screen name="MainBottomTab" component={MainBottomTabNavigator} />
+      <Stack.Screen name="MainDrawer" component={MainDrawerNavigator} />
       <Stack.Screen
         name="ExampleModal"
         component={ExampleModalStackNavigator}
