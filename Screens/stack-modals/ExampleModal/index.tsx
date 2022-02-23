@@ -1,31 +1,21 @@
 import React from 'react';
-import {View} from 'react-native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackNavigatorParamList} from '../../../Components/RootStackNavigator';
-import {QuickTestButton, QuickTestLabel} from '../../../Components/widgets';
-import {styles} from './style';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {ExampleModalRootScreenParamList, ExampleModalRootScreen} from './Root';
+import {
+  ExampleModalDetailsScreenParamList,
+  ExampleModalDetailsScreen,
+} from './Details';
 
-export type ExampleModalScreenParamList = {
-  text?: string;
+export type ExampleModalStackNavigatorParamList = {
+  Root: ExampleModalRootScreenParamList;
+  Details: ExampleModalDetailsScreenParamList;
 };
-type ExampleModalSreenProps = NativeStackScreenProps<
-  RootStackNavigatorParamList,
-  'ExampleModal'
->;
-export function ExampleModalScreen({
-  navigation,
-  route,
-}: ExampleModalSreenProps) {
+const Stack = createNativeStackNavigator<ExampleModalStackNavigatorParamList>();
+export function ExampleModalStackNavigator() {
   return (
-    <View style={styles.baseView}>
-      <QuickTestLabel title={route.params.text || ''} />
-      <QuickTestButton
-        title="Dismiss"
-        bordered
-        onPress={() => {
-          navigation.goBack();
-        }}
-      />
-    </View>
+    <Stack.Navigator>
+      <Stack.Screen name="Root" component={ExampleModalRootScreen} />
+      <Stack.Screen name="Details" component={ExampleModalDetailsScreen} />
+    </Stack.Navigator>
   );
 }

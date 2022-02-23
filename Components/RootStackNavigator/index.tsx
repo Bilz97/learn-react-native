@@ -4,15 +4,17 @@ import {
   NativeStackNavigationProp,
 } from '@react-navigation/native-stack';
 import {TransitionPresets} from '@react-navigation/stack';
-import {MainBottomTabNavigator} from '../MainBottomTabNavigator';
+import {MainBottomTabNavigator} from '../../Screens/MainBottomTab';
+import {ExampleModalStackNavigator} from '../../Screens/stack-modals/ExampleModal';
 import {
-  ExampleModalScreenParamList,
-  ExampleModalScreen,
-} from '../../Screens/stack-modals/ExampleModal';
+  TripDetailsParamList,
+  TripDetailsScreen,
+} from '../../Screens/MainBottomTab/MyCar/Drives/TripDetails';
 
 export type RootStackNavigatorParamList = {
   MainBottomTab: {};
-  ExampleModal: ExampleModalScreenParamList;
+  ExampleModal: {};
+  TripDetails: TripDetailsParamList;
 };
 export type RootStackNavigationProp =
   NativeStackNavigationProp<RootStackNavigatorParamList>;
@@ -21,13 +23,17 @@ export function RootStackNavigator() {
   return (
     <Stack.Navigator
       screenOptions={() => ({
-        headerTitle: "Bilal's Test App",
+        headerShown: false,
         cardOverlayEnabled: true,
         presentation: 'modal',
         ...TransitionPresets.ModalPresentationIOS,
       })}>
       <Stack.Screen name="MainBottomTab" component={MainBottomTabNavigator} />
-      <Stack.Screen name="ExampleModal" component={ExampleModalScreen} />
+      <Stack.Screen
+        name="ExampleModal"
+        component={ExampleModalStackNavigator}
+      />
+      <Stack.Screen name="TripDetails" component={TripDetailsScreen} />
     </Stack.Navigator>
   );
 }

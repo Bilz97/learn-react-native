@@ -4,7 +4,7 @@
 
 import 'react-native';
 import React from 'react';
-import Home from '../Screens/main-bottom-tab/Home';
+import Home from '../Screens/MainBottomTab/Home';
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';

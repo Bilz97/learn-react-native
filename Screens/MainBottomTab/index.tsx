@@ -5,8 +5,8 @@ import {
   StationListScreen,
   WinScreen,
   SavingsScreen,
-  MyCarScreen,
-} from '../../Screens';
+  MyCarStackNavigator,
+} from '..';
 
 export type MainBottomTabParamList = {
   Home: {};
@@ -26,7 +26,7 @@ export function MainBottomTabNavigator() {
       <BottomTab.Screen name="StationList" component={StationListScreen} />
       <BottomTab.Screen name="Win" component={WinScreen} />
       <BottomTab.Screen name="Savings" component={SavingsScreen} />
-      <BottomTab.Screen name="MyCar" component={MyCarScreen} />
+      <BottomTab.Screen name="MyCar" component={MyCarStackNavigator} />
     </BottomTab.Navigator>
   );
 }

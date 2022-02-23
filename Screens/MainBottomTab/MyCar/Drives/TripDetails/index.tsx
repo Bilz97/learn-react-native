@@ -5,29 +5,31 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {
   RootStackNavigatorParamList,
   RootStackNavigationProp,
-} from '../../../Components/RootStackNavigator';
-import {QuickTestButton, QuickTestLabel} from '../../../Components/widgets';
+} from '../../../../../Components/RootStackNavigator';
+import {
+  QuickTestLabel,
+  QuickTestButton,
+} from '../../../../../Components/widgets';
 import {styles} from './style';
 
-export type MyCarScreenParamList = {
-  text?: string;
+export type TripDetailsParamList = {
+  data?: string;
 };
-type MyCarScreenProps = NativeStackScreenProps<
+type TripDetailsSreenProps = NativeStackScreenProps<
   RootStackNavigatorParamList,
-  'ExampleModal'
+  'TripDetails'
 >;
-export function MyCarScreen({}: MyCarScreenProps) {
+export function TripDetailsScreen({route: {params}}: TripDetailsSreenProps) {
   const rootStackNavigation = useNavigation<RootStackNavigationProp>();
 
   return (
     <View style={styles.baseView}>
-      <QuickTestLabel title={'My Car'} />
+      <QuickTestLabel title={params.data || '<params.data is undefined>'} />
       <QuickTestButton
-        title={'Show Stack Modal'}
+        title={'Go Back'}
         bordered
         onPress={() => {
-          console.log('*** "Show Stack Modal" being pressed');
-          rootStackNavigation.navigate('ExampleModal', {text: 'From "My Car"'});
+          rootStackNavigation.goBack();
         }}
       />
     </View>

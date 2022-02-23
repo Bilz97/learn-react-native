@@ -8,6 +8,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {RootStackNavigator} from '../RootStackNavigator';
 import {styles} from './style';
 
+// App - AppRoot - RootStackNavigator
+
 export function RootComponent() {
   return (
     <NavigationContainer>
