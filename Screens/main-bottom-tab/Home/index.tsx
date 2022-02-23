@@ -12,17 +12,11 @@
 // https://developer.nrel.gov/docs/transportation/alt-fuel-stations-v1/
 
 import React from 'react';
-import {SafeAreaView, ScrollView, useColorScheme} from 'react-native';
+import {ScrollView} from 'react-native';
 
-import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
+import {Header} from 'react-native/Libraries/NewAppScreen';
 
 export function HomeScreen() {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   // const DATA = [
   //   {
   //     title: "charger 1",
@@ -38,13 +32,9 @@ export function HomeScreen() {
   //   },
   // ];
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-      </ScrollView>
-    </SafeAreaView>
+    <ScrollView contentInsetAdjustmentBehavior="automatic">
+      <Header />
+    </ScrollView>
   );
 }
 

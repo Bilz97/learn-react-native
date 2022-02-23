@@ -3,7 +3,7 @@
  */
 
 import {AppRegistry} from 'react-native';
-import {BottomNavigationTabs} from './Components/Tabs';
+import {RootComponent} from './Components/AppRoot';
 import {name as appName} from './app.json';
 
-AppRegistry.registerComponent(appName, () => BottomNavigationTabs);
+AppRegistry.registerComponent(appName, () => RootComponent);
