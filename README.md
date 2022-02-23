@@ -31,3 +31,4 @@
 
   This change is required to avoid crashes related to View state being not persisted consistently across Activity restarts.
 
+<img width="1293" alt="Screen Shot 2022-02-23 at 10 59 44 AM" src="https://user-images.githubusercontent.com/46003022/155403176-d20a6a20-e70a-4623-88b4-d20e6df90044.png">
