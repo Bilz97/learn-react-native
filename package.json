@@ -8,7 +8,7 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx", 
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "dir": "ls"
   },
   "dependencies": {
@@ -17,6 +17,7 @@
     "@react-navigation/native-stack": "^6.2.5",
     "react": "17.0.2",
     "react-native": "0.66.4",
+    "react-native-maps": "^0.30.1",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.10.1"
   },
