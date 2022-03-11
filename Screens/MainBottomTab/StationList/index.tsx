@@ -1,10 +1,13 @@
 import React from 'react';
-import {Text} from 'react-native';
+import {Text, View, Button} from 'react-native';
+import MapView from 'react-native-maps';
+import {styles} from './style';
 
 // https://developer.nrel.gov/api/alt-fuel-stations/v1.json?fuel_type=all,ELEC&state=CA&limit=2&api_key=YHtHJMO4XbWQSlXZSGyKwhMtzDSuvmfWzbbR4mkx
 
 export function StationListScreen() {
   const [stations, setStations] = React.useState([]);
+  const [showMap, setShowMap] = React.useState(false);
   function fetchStations() {
     const url =
       'https://developer.nrel.gov/api/alt-fuel-stations/v1.json?fuel_type=all,ELEC&state=CA&limit=5&api_key=YHtHJMO4XbWQSlXZSGyKwhMtzDSuvmfWzbbR4mkx';
@@ -37,5 +40,31 @@ export function StationListScreen() {
   React.useEffect(() => {
     fetchStations();
   }, []);
-  return <Text>StationList</Text>;
+  return (
+    <View style={styles.container}>
+      <View style={styles.viewMapButton}>
+        <Button
+          title={showMap ? 'List' : 'Map'}
+          onPress={() => {
+            console.log('show map pressed');
+            setShowMap(!showMap);
+          }}
+        />
+      </View>
+
+      {!showMap && <Text>Station List</Text>}
+
+      {showMap && (
+        <MapView
+          style={styles.map}
+          initialRegion={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+        />
+      )}
+    </View>
+  );
 }
