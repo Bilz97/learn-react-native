@@ -1,45 +1,54 @@
 import React from 'react';
 import {Text, View, Button} from 'react-native';
-import MapView from 'react-native-maps';
 import {styles} from './style';
+import {StationMap, Station} from './StationMap';
+import {Region} from 'react-native-maps';
 
 // https://developer.nrel.gov/api/alt-fuel-stations/v1.json?fuel_type=all,ELEC&state=CA&limit=2&api_key=YHtHJMO4XbWQSlXZSGyKwhMtzDSuvmfWzbbR4mkx
 
 export function StationListScreen() {
-  const [stations, setStations] = React.useState([]);
+  const [stations, setStations] = React.useState<Station[]>([]);
   const [showMap, setShowMap] = React.useState(false);
-  function fetchStations() {
-    const url =
-      'https://developer.nrel.gov/api/alt-fuel-stations/v1.json?fuel_type=all,ELEC&state=CA&limit=5&api_key=YHtHJMO4XbWQSlXZSGyKwhMtzDSuvmfWzbbR4mkx';
+  const [initialRegion, setInitialRegion] = React.useState<Region>({
+    latitude: 0,
+    longitude: 0,
+    latitudeDelta: 0,
+    longitudeDelta: 0,
+  });
+  const url =
+    'https://developer.nrel.gov/api/alt-fuel-stations/v1.json?fuel_type=all,ELEC&state=CA&limit=5&api_key=YHtHJMO4XbWQSlXZSGyKwhMtzDSuvmfWzbbR4mkx';
+
+  const fetchStations = React.useCallback(() => {
     fetch(url)
       .then(response => {
-        // console.log('*** api response', JSON.stringify(response));
-        response
-          .json()
-          .then(data => {
-            console.log(
-              '*** fuel_stations',
-              JSON.stringify(data.fuel_stations),
-            );
-            if (data.fuel_stations.length > 0) {
-              setStations(data.fuel_stations);
-            }
-          })
-          .catch(reason => {
-            console.log(
-              '*** fetchStations() jsonfy failed',
-              JSON.stringify(reason),
-            );
-          });
+        response.json().then(data => {
+          if (data.fuel_stations.length) {
+            setStations(data.fuel_stations);
+          }
+        });
       })
       .catch(error => {
         console.log('*** fetchStations() failed', JSON.stringify(error));
       });
-  }
+  }, []);
 
   React.useEffect(() => {
     fetchStations();
-  }, []);
+  }, [fetchStations]);
+
+  React.useEffect(() => {
+    if (stations[0]) {
+      const iRegion = {
+        latitude: stations[0].latitude,
+        longitude: stations[0].longitude,
+        latitudeDelta: 8,
+        longitudeDelta: 8,
+      };
+      console.log('set initial region', iRegion.latitude);
+      setInitialRegion(iRegion);
+    }
+  }, [stations]);
+
   return (
     <View style={styles.container}>
       <View style={styles.viewMapButton}>
@@ -51,19 +60,10 @@ export function StationListScreen() {
           }}
         />
       </View>
-
-      {!showMap && <Text>Station List</Text>}
-
-      {showMap && (
-        <MapView
-          style={styles.map}
-          initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-        />
+      {showMap ? (
+        <StationMap initialRegion={initialRegion} stations={stations} />
+      ) : (
+        <Text>Station List</Text>
       )}
     </View>
   );
