@@ -8,4 +8,12 @@ export const styles = StyleSheet.create({
   viewMapButton: {
     alignItems: 'flex-end',
   },
+  stationRow: {
+    margin: 10,
+    backgroundColor: 'cyan',
+  },
+  fullWidthAndHeight: {
+    width: '100%',
+    height: '100%',
+  },
 });

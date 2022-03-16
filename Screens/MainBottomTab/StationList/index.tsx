@@ -1,28 +1,22 @@
 import React from 'react';
-import {Text, View, Button} from 'react-native';
+import {Text, View, Button, FlatList, TouchableOpacity} from 'react-native';
 import {styles} from './style';
 import {StationMap, Station} from './StationMap';
-import {Region} from 'react-native-maps';
 
 // https://developer.nrel.gov/api/alt-fuel-stations/v1.json?fuel_type=all,ELEC&state=CA&limit=2&api_key=YHtHJMO4XbWQSlXZSGyKwhMtzDSuvmfWzbbR4mkx
 
 export function StationListScreen() {
   const [stations, setStations] = React.useState<Station[]>([]);
-  const [showMap, setShowMap] = React.useState(false);
-  const [initialRegion, setInitialRegion] = React.useState<Region>({
-    latitude: 0,
-    longitude: 0,
-    latitudeDelta: 0,
-    longitudeDelta: 0,
-  });
+  const [showMap, setShowMap] = React.useState(true);
   const url =
-    'https://developer.nrel.gov/api/alt-fuel-stations/v1.json?fuel_type=all,ELEC&state=CA&limit=5&api_key=YHtHJMO4XbWQSlXZSGyKwhMtzDSuvmfWzbbR4mkx';
+    'https://developer.nrel.gov/api/alt-fuel-stations/v1.json?fuel_type=all,ELEC&state=CA&limit=30&api_key=YHtHJMO4XbWQSlXZSGyKwhMtzDSuvmfWzbbR4mkx';
 
   const fetchStations = React.useCallback(() => {
     fetch(url)
       .then(response => {
         response.json().then(data => {
           if (data.fuel_stations.length) {
+            console.log('number of stations', data.fuel_stations.length);
             setStations(data.fuel_stations);
           }
         });
@@ -32,22 +26,18 @@ export function StationListScreen() {
       });
   }, []);
 
+  const renderStationRow = ({item}: {item: Station}) => (
+    <TouchableOpacity style={[styles.container, styles.stationRow]}>
+      <Text>{item.id}</Text>
+      <Text>{item.station_name}</Text>
+      <Text>{item.latitude}</Text>
+      <Text>{item.longitude}</Text>
+    </TouchableOpacity>
+  );
+
   React.useEffect(() => {
     fetchStations();
   }, [fetchStations]);
-
-  React.useEffect(() => {
-    if (stations[0]) {
-      const iRegion = {
-        latitude: stations[0].latitude,
-        longitude: stations[0].longitude,
-        latitudeDelta: 8,
-        longitudeDelta: 8,
-      };
-      console.log('set initial region', iRegion.latitude);
-      setInitialRegion(iRegion);
-    }
-  }, [stations]);
 
   return (
     <View style={styles.container}>
@@ -55,16 +45,27 @@ export function StationListScreen() {
         <Button
           title={showMap ? 'List' : 'Map'}
           onPress={() => {
-            console.log('show map pressed');
             setShowMap(!showMap);
           }}
         />
       </View>
-      {showMap ? (
-        <StationMap initialRegion={initialRegion} stations={stations} />
-      ) : (
-        <Text>Station List</Text>
-      )}
+      <View>
+        <View
+          style={[
+            {display: showMap ? 'flex' : 'none'},
+            styles.fullWidthAndHeight,
+          ]}>
+          <StationMap stations={stations} />
+        </View>
+        <View style={{display: showMap ? 'none' : 'flex'}}>
+          <Text>Station List</Text>
+          <FlatList
+            data={stations}
+            renderItem={item => renderStationRow(item)}
+            keyExtractor={(item, index) => `${item.id}-${index}`}
+          />
+        </View>
+      </View>
     </View>
   );
 }
